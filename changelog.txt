@@ -1,0 +1,161 @@
+CHANGE LOG — LI APP
+
+Cập nhật từ LI_APP(5).zip
+
+- Loại bỏ file chạy Import PRIME bằng dòng lệnh không cần thiết cho giao diện.
+- Giữ Import PRIME và Import CUM hoạt động qua các nút trong ứng dụng.
+- Tách log tiến độ thông thường và log cảnh báo/lỗi để dễ nhận biết trên terminal.
+- Cập nhật tài liệu chạy ứng dụng và hướng dẫn thay thế project.
+- Bổ sung file change log.txt ghi tổng quan nội dung thay đổi trong mỗi lần bàn giao code.
+
+[2026-09-13 21:30:28]  CHANGE LOG – BỘ LỌC LI
+
+- Thêm giao diện bộ lọc theo Aging: From, To, EQP, SLOT, Tier, Model và Scrap Code.
+- Giữ hai nút IMPORT PRIME, IMPORT CUM; bổ sung nút SEARCH phát bộ điều kiện đã chọn.
+- Lấy lựa chọn từ database LI, tự nạp lại sau khởi tạo và import bằng worker.
+- Giữ checkbox, Select All và cách đánh dấu mã Scrap Code ưu tiên của Aging.
+- Bổ sung kiểm thử bộ lọc và cập nhật kiểm thử giao diện.
+
+
+[2026-09-13 22:24:28] CHANGE LOG — CUM YIELD LI SUMMARY (UTC+7)
+
+- Thêm tab Summary với bảng CUM bên trái và biểu đồ bên phải theo Aging.
+- Tổng hợp In/Out, Fail Qty, Fail PPM, Yield và Total từ cum_data theo công thức Aging.
+- Nối SEARCH với bộ lọc ngày, Tier, Model; giữ phạm vi Summary toàn bộ máy như Aging.
+- Thêm worker đọc dữ liệu, cache kết quả và làm mới sau import; xử lý trạng thái rỗng/lỗi.
+- Bổ sung Matplotlib và kiểm thử chức năng Summary.
+- Giữ nội dung read.md cũ; chuyển toàn bộ lịch sử change log.txt sang changelog.txt, nối mục mới kèm ngày giờ Việt Nam.
+
+
+[2026-09-13 22:48:31] CHANGE LOG — SỬA MODEL FILTER CHO CUM (UTC+7)
+
+- Sửa danh sách Model lấy từ cả prime_data và cum_data, loại trùng, để chọn được Model chỉ có trong CUM.
+- Khắc phục Summary rỗng do Model của CUM không xuất hiện trong bộ lọc.
+- Cập nhật kiểm thử trường hợp PRIME rỗng nhưng CUM có dữ liệu; giữ công thức Summary hiện tại.
+- Nối hướng dẫn và nhật ký mới vào nội dung cũ, kèm ngày giờ Việt Nam.
+
+
+[2026-09-13 22:56:57] CHANGE LOG — ĐÓNG APP MỘT LẦN CLICK (UTC+7)
+
+- Sửa lỗi phải bấm Close hai lần khi app rảnh.
+- Chuyển yêu cầu đóng sang lượt xử lý sự kiện Qt tiếp theo, tránh gọi đóng lồng nhau.
+- Giữ cơ chế đợi worker kết thúc an toàn và tự đóng sau một lần bấm.
+- Bổ sung kiểm thử tái hiện lỗi; toàn bộ 10 kiểm thử thành công.
+
+
+[2026-09-13 23:23:59] CHANGE LOG — TỐI ƯU INDEX VÀ LOADING DIALOG (UTC+7)
+
+- Kiểm tra lại index hiện có theo các truy vấn import, filter option, sync Tier và CUM Summary.
+- Bổ sung các index còn thiếu cho SLOT, MODEL, TIER/MODEL, SCRAPCODE và Summary CUM theo TIER/MODEL/DATE/EQPID.
+- Tự tạo index còn thiếu khi mở database schema 2 cũ, không yêu cầu xóa hoặc tạo lại database.
+- Thêm LoadingDialog giống Aging và dùng cho SEARCH, Import PRIME, Import CUM.
+- Bỏ chữ “đang tải...” trên tiêu đề Summary, để trạng thái chạy nền hiển thị bằng dialog.
+- Cập nhật read.md theo từng chức năng kèm file liên quan; bổ sung kiểm thử index.
+- Toàn bộ 11 kiểm thử thành công.
+
+[2026-09-14 10:43:59]CẬP NHẬT LI DAILY YIELD
+
+- Thêm bảng Cum Yield và Prime Yield theo từng ngày, từng EQP và Scrap Code PPM.
+- Thêm biểu đồ cột chồng Scrap PPM kết hợp đường Yield theo thiết kế Aging.
+- Tối ưu truy vấn, bổ sung index cho mã lỗi PRIME và cache khi đổi Scrap Code.
+- Nạp thư viện vẽ khi SEARCH sau khi cửa sổ đã mở; giữ loading trong lúc hiển thị kết quả.
+- Tự bổ sung index vào database hiện tại, không yêu cầu xóa database.
+- Bổ sung kiểm thử và hướng dẫn các file liên quan theo từng chức năng.
+
+
+[2026-09-14 14:14:42] CHANGE LOG — PRIME DAILY CHỈ TÍNH TEST_COUNT = 1 (UTC+7)
+
+- Chỉ lấy TEST_COUNT = 1 khi tính In/Pass/Fail, Yield và Scrap Code PPM của Prime Yield LI Daily.
+- Bảng và biểu đồ Prime Daily cùng sử dụng dữ liệu lần test đầu tiên.
+- Giữ dữ liệu test lại trong database và giữ nguyên thống kê CUM.
+- Nối nội dung mới vào read.md và changelog.txt, giữ toàn bộ lịch sử cũ.
+
+
+[2026-09-14 14:37:40] CHANGE LOG — PRIME YIELD SLOT 1–48 (UTC+7)
+
+- Thêm tab Yield Slot: thống kê In, PASS, Prime FAIL, Prime Yield và Fail PPM theo khoảng ngày/EQP/Tier/Model, chỉ tính TEST_COUNT = 1.
+- Hiển thị đủ 48 slot và biểu đồ số lượng Prime FAIL ngay dưới bảng.
+- SEARCH chỉ xử lý tab hiện tại, cache riêng từng tab, chạy SQL nền và dùng loading hiện có.
+- Nạp thư viện biểu đồ khi SEARCH; bổ sung partial index tự động cho database cũ và mới.
+- Bổ sung kiểm thử công thức, index, cache, xử lý lỗi và tab đang mở.
+- Nối tài liệu và nhật ký vào cuối nội dung cũ; chỉ bàn giao file mới/sửa.
+
+
+
+[2026-09-14 17:17:24] CHANGE LOG — GIAO DIỆN SLOT VÀ TỰ TẢI KHI CHUYỂN TAB (UTC+7)
+
+- Thêm nền lưới/khung biểu đồ Slot Fail Prime, bỏ vạch tick và đưa đỉnh trục Y về đúng số Fail lớn nhất.
+- Bỏ dòng “Áp dụng...”, thêm ô Slot nền xanh và thu gọn chiều rộng cột đủ hiển thị PPM.
+- Chuyển tab tự hiển thị theo bộ lọc đang chọn, kể cả thay đổi chưa bấm SEARCH; giữ worker nền và cache riêng từng tab.
+- Giữ nguyên phép tính, lọc TEST_COUNT = 1, index và database.
+- Bổ sung kiểm thử; nối read.md/changelog.txt vào nội dung cũ và chỉ bàn giao file thay đổi.
+
+[2026-09-14 18:06:07 UTC+07:00]
+- Thêm bảng và biểu đồ Daily Prime Yield cho EQP/SLOT được chọn, nằm dưới Slot Fail Prime.
+- Chỉ lấy TEST_COUNT=1; Total Yield tính tổng Output/tổng Input, xử lý ngày không có dữ liệu.
+- Bổ sung partial index EQP/SLOT/DATE, giữ worker nền/lazy import; cache Yield Slot có SLOT.
+- Bảng và chart nằm ngang, chart cùng kích thước Summary; kiểm thử truy vấn, dữ liệu và GUI.
+- read.md nối hướng dẫn, cơ chế tối ưu và danh sách file liên quan; giữ toàn bộ lịch sử cũ.\
+
+
+[2026-09-15 09:31:00 (UTC+07:00)] Cum Yield by Model
+- Thêm bảng thống kê CUM theo Model, tự sinh tất cả cột scrapcode và dòng Total tổng scrap của các Model.
+- Thêm Copy All/Ctrl+C/chuột phải để copy cả bảng sang Excel.
+- Thêm biểu đồ cột chồng scrap và đường Yield ngay dưới bảng; Scrap Code chỉ lọc biểu đồ.
+- Tích hợp bộ lọc Date/EQP/Tier/Model, worker/loading, cache và tự cập nhật khi quay lại Summary.
+- Tối ưu bằng 2 truy vấn tổng hợp, index hiện có, QAbstractTableModel và lazy import biểu đồ.
+- Bổ sung kiểm thử và nối tiếp hướng dẫn vào read.md; chỉ bàn giao file thêm/sửa.
+
+[2026-09-15 10:11:45 (UTC+07:00)] Điều chỉnh Cum Yield by Model
+- Chuyển bảng và biểu đồ xuống cuối tab Yield Slot.
+- Chỉ hiển thị legend của mã được chọn có số lượng phát sinh thực tế.
+- Đồng bộ bảng màu, tối đa 15 legend/hàng và kích thước 1550x550 với Cum Daily LI; bỏ in đậm chart title.
+- Co cột bảng theo mã lỗi/số lượng; khung bảng mở hết chiều ngang tab; giữ Copy All.
+- Giữ lọc/cache/lazy import; đổi SLOT không truy vấn lại CUM, không chọn EQP vẫn xem CUM tất cả máy.
+- Cập nhật kiểm thử và nối tiếp read.md; chỉ bàn giao file chỉnh sửa.
+
+
+
+[2026-09-15 10:54:25 (UTC+07:00)] Cum Yield by Model — bỏ lọc EQP/Model
+- Bảng chỉ phụ thuộc From, To, Tier; luôn thống kê tất cả EQP và Model.
+- Scrap Code vẫn chỉ điều khiển các mã có dữ liệu trên biểu đồ; Total/Copy All giữ nguyên.
+- Cache CUM độc lập EQP/Model/SLOT, thêm index phù hợp Tier/Date cho database hiện có.
+- Giữ bộ lọc/cách tính của các bảng khác; cập nhật kiểm thử và nối tiếp read.md.
+
+[2026-09-15 11:10:24 (UTC+07:00)] File Management giống Aging
+- Thêm hai danh sách PRIME/CUM theo Month, Date, Load time; lọc tháng/ngày và chọn ngày xuất PRIME.
+- Thêm xuất Excel streaming bằng worker/loading, chia sheet tự động; giữ tất cả Test Count.
+- Thêm khối Auto Import Prime Log và bảng cấu hình cho DB hiện có, không xóa dữ liệu.
+- Thêm auto_import_main.py dùng Task Scheduler import hôm qua theo giờ lưu, parser/khóa/staging LI.
+- Tải tab độc lập bộ lọc thống kê, làm mới khi quay lại/sau import và đóng cửa sổ an toàn.
+- Kiểm thử chức năng mới; nối tiếp read.md, chỉ bàn giao file thêm/sửa.
+
+[2026-09-15 11:20:49 (UTC+07:00)] Sửa File Management ẩn bộ lọc
+- Giữ bộ lọc và khoảng cách bố cục giống các tab khác khi mở File Management.
+- Bỏ logic ẩn bộ lọc và cho tab chiếm vùng phía trên.
+- Cập nhật kiểm tra giao diện; 4 kiểm thử File Management đạt.
+- Nối tiếp read.md/changelog.txt, chỉ bàn giao file sửa.
+
+[2026-09-15 12:47:53 (UTC+07:00)] Auto Import bỏ qua ngày chưa có file
+- Chuyển riêng trường hợp ngày cần import không có file .txt thành trạng thái SKIPPED, không ghi ERROR/TRACEBACK.
+- Giữ nguyên last_import_date để tác vụ tự kiểm tra lại khi file được bổ sung sau đó.
+- Các lỗi truy cập, dữ liệu, cấu trúc file và database vẫn báo lỗi như trước.
+- Không thay đổi hành vi Import PRIME thủ công hoặc các chức năng khác.
+- Bổ sung kiểm thử và nối tiếp read.md/changelog.txt.
+
+[2026-09-15 13:12:28 (UTC+07:00)] Auto Import PRIME ngày hiện tại
+- Thêm auto_import_today_main.py để Task Scheduler import lại log ngày hiện tại mỗi lần chạy.
+- Dùng PrimeImportService hiện có để staging, xóa dữ liệu ngày cũ và ghi toàn bộ dữ liệu mới trong transaction; không thay logic nút Import PRIME.
+- Không dùng hoặc cập nhật last_import_date, cho phép chạy lặp và vẫn để task hôm qua chốt dữ liệu ngày kế tiếp.
+- Ghi chung auto_import_log.txt, thêm nhãn TODAY; thiếu file ghi SKIPPED và không xóa dữ liệu hiện có.
+- Dùng chung cấu hình Enable/Import Time/Log Folder và khóa import của LI.
+- Thêm 2 kiểm thử Today; nối tiếp read.md/changelog.txt; chỉ bàn giao file thêm/sửa.
+
+[2026-09-15 14:47:10 (UTC+07:00)] Thiết kế tab Send Mail giống Aging
+- Thêm giao diện Sender, Receiver/CC, Auto Send Mail, Test Login và MAIL HISTORY cùng các hộp thoại tương ứng.
+- Quản lý thêm/xóa, chỉ một Sender Enable, đổi loại Receiver/CC/None và lưu giờ gửi trong database LI.
+- Bổ sung bảng mail cho DB hiện tại, giữ nguyên dữ liệu PRIME/CUM; không cần tạo lại database.
+- Test Login chạy nền, lazy import requests; chờ worker kết thúc an toàn khi đóng app.
+- Tạm khóa Customize Email; chưa triển khai gửi mail thủ công/tự động. Auto Send Mail chỉ lưu cấu hình.
+- Kiểm tra DB, thao tác cấu hình, hiển thị Qt và vòng đời login bằng phản hồi mô phỏng; chưa kết nối thật hệ thống mail nội bộ.
+- Nối tiếp read.md/changelog.txt; chỉ bàn giao các file thêm/sửa.
