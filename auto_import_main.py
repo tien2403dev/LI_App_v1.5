@@ -171,7 +171,7 @@ def run_auto_import(
 
     target_date = (
         now.date()
-        - timedelta(days=5)
+        - timedelta(days=1)
     ).strftime(
         "%Y%m%d"
     )
